@@ -8,39 +8,48 @@
 //   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
 //   anagrams('Hi there', 'Bye there') --> False
 
-function convertStr(str) {
-    str = str.trim().toLowerCase().replace(/ /g , '');
-    let tempArr = [];
-    for (let char of str) {
-        if (char.charCodeAt() >= 97 && char.charCodeAt() <= 122) {
-            tempArr.push(char);
-        }
-    }
-    str = tempArr.join('');
-    return str;
-}
-
-function hashStrToObj(str) {
-    let obj = {};
-    for (let char of str) {
-        obj[char] = obj[char] ? ++obj[char] : 1;
-    }
-    return obj;
+function cleanString(str) {
+    return str.replace(/[^\w]/g, '').toLowerCase().split('').sort().join('');
 }
 
 function anagrams(stringA, stringB) {
-    stringA = convertStr(stringA);
-    stringB = convertStr(stringB);
-    let objA = hashStrToObj(stringA);
-    let objB = hashStrToObj(stringB);
-
-    for (const key in objA) {
-        if (objA[key] !== objB[key]) return false;
-    }
-    for (const key in objB) {
-        if (objA[key] !== objB[key]) return false;
-    }
-    return true;
+    return cleanString(stringA) === cleanString(stringB);
 }
 
 module.exports = anagrams;
+
+// Solution 1
+// function createCharMap(str) {
+//     let charMap = {};
+//     str = str.replace(/[^\w]/g, '').toLowerCase();
+//     for (let char of str) {
+//         charMap[char] = ++charMap[char] || 1;
+//     }
+//     return charMap;
+// }
+
+// function anagrams(stringA, stringB) {
+//     let aChapMap = createCharMap(stringA);
+//     let bChapMap = createCharMap(stringB);
+
+//     if (Object.keys(aChapMap).length !== Object.keys(bChapMap).length) {
+//         return false;
+//     }
+
+//     for (let key in aChapMap) {
+//         if (aChapMap[key] !== bChapMap[key]) {
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+// Solution 2
+// function cleanString(str) {
+//     return str.replace(/[^\w]/g, '').toLowerCase().split('').sort().join('');
+// }
+
+// function anagrams(stringA, stringB) {
+//     return cleanString(stringA) === cleanString(stringB);
+// }
