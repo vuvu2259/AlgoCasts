@@ -117,20 +117,28 @@ class LinkedList {
     }
   }
 
-	[Symbol.iterator]() {
-		let node = this.head;
-		return {
-			next: () => {
-				if (!node) return { done: true };
-				const value = node;
-				node = node.next;
-				return {
-					done: false,
-					value
-				}
-			}
-		}
-	}
+	// [Symbol.iterator]() {
+	// 	let node = this.head;
+	// 	return {
+	// 		next: () => {
+	// 			if (!node) return { done: true };
+	// 			const value = node;
+	// 			node = node.next;
+	// 			return {
+	// 				done: false,
+	// 				value
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node;
+      node = node.next;
+    }
+  }
 }
 
 module.exports = { Node, LinkedList };
